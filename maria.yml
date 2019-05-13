@@ -1,0 +1,18 @@
+- name: configure mariadb
+  hosts: 127.0.0.1
+  connection: local
+  tasks:
+  - name: mysql_secure_installation Command Test
+    expect:
+      command: mysql_secure_installation
+      responses:
+        (.*)Enter current password for root(.*) : ''
+        (.*)Set root password(.*): 'y'
+        'New password:' : '1rootPass#'
+        'Re-enter new password:' : '1rootPass#'
+        (.*)Remove anonymous users(.*) : 'y'
+        (.*)Disallow root login remotely(.*) : 'y'
+        (.*)Remove test database and access to it(.*) : 'y'
+        (.*)Reload privilege tables now(.*): 'y'
+
+      echo: yes

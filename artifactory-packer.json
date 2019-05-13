@@ -16,12 +16,12 @@
   "provisioners": [{
     "type": "shell",
     "scripts": [
-      "prep-artifactory.sh"
+      "scripts/prep-artifactory.sh"
     ]
   },
   {
    "type": "ansible-local",
-   "playbook_file" : "maria.yml" 
+   "playbook_file" : "ansible/maria.yml"
   }]
 }
 

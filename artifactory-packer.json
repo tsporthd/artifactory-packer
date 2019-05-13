@@ -18,6 +18,10 @@
     "scripts": [
       "prep-artifactory.sh"
     ]
+  },
+  {
+   "type": "ansible-local",
+   "playbook_file" : "maria.yml" 
   }]
 }
 

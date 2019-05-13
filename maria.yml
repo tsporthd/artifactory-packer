@@ -1,5 +1,7 @@
 - name: configure mariadb
   hosts: 127.0.0.1
+  vars:
+   root_pwd: '1rootPass#'
   connection: local
   tasks:
   - name: mysql_secure_installation Command Test
@@ -8,11 +10,22 @@
       responses:
         (.*)Enter current password for root(.*) : ''
         (.*)Set root password(.*): 'y'
-        'New password:' : '1rootPass#'
-        'Re-enter new password:' : '1rootPass#'
+        'New password:' : "{{root_pwd}}"
+        'Re-enter new password:' : "{{root_pwd}}"
         (.*)Remove anonymous users(.*) : 'y'
         (.*)Disallow root login remotely(.*) : 'y'
         (.*)Remove test database and access to it(.*) : 'y'
         (.*)Reload privilege tables now(.*): 'y'
+      echo: yes
 
+  - name: configure-maria-artifactory
+    expect:
+      command: /opt/jfrog/artifactory/bin/configure.mysql.sh
+      responses:
+        (.*)Please enter the MySQL server admin username(.*) : ''
+        (.*)Please enter the MySQL server admin password:(.*) : "{{root_pwd}}"
+        (.*)Please enter the Artifactory database username(.*) : ''
+        (.*)Please enter the Artifactory database password(.*) : ''
+        (.*)Does the current server has access to the Internet(.*) : 'Y'
+        (.*)Press enter to exit(.*) : ''
       echo: yes
